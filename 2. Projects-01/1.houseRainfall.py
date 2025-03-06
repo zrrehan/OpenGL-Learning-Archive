@@ -56,6 +56,7 @@ def keyboard_listen(key, x, y):
     
 
 day_color = [[0, 0, 0], [0.23, 0.23, 0.23], [.4,.4,.4], [.6,.6,.6]]
+day_color_idx = 0 
 color = day_color[0]
 color_idx = 0
 def change_day(key, x, y):
@@ -100,13 +101,27 @@ def showScreen():
     # draw_points(250, 250) 
     glPointSize(5)
 
-    glBegin(GL_QUADS)
+    glBegin(GL_TRIANGLES)
     glColor3f(0.11, 0.812, 0.03)
     glVertex2f(0, 0)
     glVertex2f(1000, 0)
     glColor3f(0.74, 0.92, 0.15)
     glVertex2f(1000, 150)
+
+    glColor3f(0.11, 0.812, 0.03)
+    glVertex2f(0, 0)
+    glColor3f(0.74, 0.92, 0.15)
+    glVertex2f(1000, 150)
     glVertex2f(0, 150)
+    glEnd()
+
+    glBegin(GL_TRIANGLES)
+    for i in range(0, 1000, 100):
+        glColor3f(0, 1, 0)
+        glVertex2f(i, 150)
+        glVertex2f(i + 100, 150)
+        glColor3f(1, 1, 0)
+        glVertex2f(i + 50, 200)
     glEnd()
 
     glBegin(GL_TRIANGLES)
@@ -117,12 +132,16 @@ def showScreen():
     glVertex2f(700, 200) 
     glEnd()
 
-    glBegin(GL_QUADS)
+    glBegin(GL_TRIANGLES)
     glColor3f(1, 1, 1)
     glVertex2f(320, 200)
     glVertex2f(320, 100)
-    glVertex2f(680, 100)
     glVertex2f(680, 200)
+
+    glVertex2f(680, 100)
+    glVertex2f(320, 100)
+    glVertex2f(680, 200)
+
     glEnd()
 
     
