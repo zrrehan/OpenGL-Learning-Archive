@@ -102,7 +102,7 @@ def draw_catcher():
     x1, y1 = catcher_points[0]
     x2, y2 = catcher_points[1]
 
-    glColor3f(1, 1, 1)
+    # glColor3f(1, 1, 1)
     eight_way_symmetry([x1, y1], [x2, y2])
     eight_way_symmetry([x1 + 10, y1 - 10], [x2 - 10, y2 - 10])
     eight_way_symmetry([x1, y1], [x1 + 10, y1 - 10])
@@ -236,6 +236,8 @@ def diamont_catch():
             print("Game over! Score:", score)
         move = False
         game_over = True
+        glColor3f(1, 0, 0)
+        draw_catcher()
 
 
 
@@ -276,7 +278,7 @@ glutInit()
 glutInitDisplayMode(GLUT_RGBA) #we will use Colorful stuff
 glutInitWindowSize(500, 700) #window size
 glutInitWindowPosition(0, 0) # from the where the program will run compare to my monitor
-wind = glutCreateWindow(b"OpenGL First Code") #window name
+wind = glutCreateWindow(b"Diamond Catcher") #window name
 glutDisplayFunc(showScreen) 
 glutSpecialFunc(change_catcher_left)
 glutIdleFunc(diamont_animation)
