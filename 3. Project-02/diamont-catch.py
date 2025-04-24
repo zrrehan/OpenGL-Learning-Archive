@@ -53,7 +53,7 @@ def mouseListener(button, state, x1, y1):
             x, y = convert_coordinate(x1, y1)
             if(10 <= x <= 50 and 640 <= y <= 690):
                 glutLeaveMainLoop()
-            if(245 <= x <= 265 and 640 <= y <= 690):
+            if(235 <= x <= 265 and 640 <= y <= 690):
                 move = not move
             if(450 <= x <= 490 and 640 <= y <= 690):
                 score = 0 
