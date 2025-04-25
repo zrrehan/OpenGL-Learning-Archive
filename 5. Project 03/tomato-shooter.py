@@ -2,6 +2,7 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import random
+import math
 
 # Camera-related variables
 camera_pos = (0,500,500)
@@ -49,13 +50,14 @@ def show_enemies():
 
 def player():
     glPushMatrix()
+    glTranslatef(player_pos[0], player_pos[1], 0)
     glRotatef(angle, 0, 0, 1)  
     # glTranslatef(player_pos[0], player_pos[1], 0)
 
     glPushMatrix()
     # body
     glColor3f(0, 0.2, 0.1)
-    glTranslatef(player_pos[0], player_pos[1], 0)  # setting the position 
+    glTranslatef(0, 0, 0)  # setting the position 
     glScalef(1.5,1,1)
     glutSolidCube(100)
     glPopMatrix()
@@ -64,14 +66,14 @@ def player():
     # head 
     glPushMatrix()
     glColor3f(0,0,0)
-    glTranslatef(player_pos[0], player_pos[1], 100) 
+    glTranslatef(0, 0, 100) 
     gluSphere(gluNewQuadric(), 30, 100, 10)
     glPopMatrix()
   
 
     # right hand 
     glPushMatrix()
-    glTranslatef(player_pos[0] - 50, player_pos[1], 50)
+    glTranslatef(0 - 50, 0, 50)
     glRotatef(90, 0, 1, 0)  
     glRotatef(90, 1, 0, 0)  
     glColor3f(0.34, 0.67, 0.87)
@@ -80,7 +82,7 @@ def player():
 
     #  right hand 
     glPushMatrix()
-    glTranslatef(player_pos[0] + 50, player_pos[1], 50)
+    glTranslatef(0 + 50, 0, 50)
     glRotatef(90, 0, 1, 0)  
     glRotatef(90, 1, 0, 0)  
     glColor3f(0.34, 0.67, 0.87)
@@ -89,7 +91,7 @@ def player():
 
     # gun 
     glPushMatrix()
-    glTranslatef(player_pos[0], player_pos[1], 50)
+    glTranslatef(0, 0, 50)
     glRotatef(90, 0, 1, 0)  
     glRotatef(90, 1, 0, 0)  
     glColor3f(0.18, 0.2, 0.17)
@@ -125,6 +127,32 @@ def draw_floor():
 
             grid_start_x -= 100
         grid_start_y += 100
+
+        glColor3f(1,0,0)
+        glVertex3f(500, -500, 0)
+        glVertex3f(500, -500, 100)
+        glVertex3f(-600, -500, 100)
+        glVertex3f(-600, -500, 0)
+       
+        glColor3f(0,1,0)
+        glVertex3f(-600, -500, 100)
+        glVertex3f(-600, -500, 0)
+        glVertex3f(-600, 600, 0)
+        glVertex3f(-600, 600, 100)
+
+        glColor3f(1, 1, 0)
+        glVertex3f(-600, 600, 0)
+        glVertex3f(-600, 600, 100)
+        glVertex3f(500, 600, 100)
+        glVertex3f(500, 600, 0)
+
+        glColor3f(0, 0, 1)
+        glVertex3f(500, 600, 100)
+        glVertex3f(500, 600, 0)
+        glVertex3f(500, -500, 0)
+        glVertex3f(500, -500, 100)
+
+
 
     glEnd()
 
@@ -180,11 +208,21 @@ def keyboardListener(key, x, y):
         angle -= 1
         print(player_pos)
 
-    if key == b'w':
-        player_pos[1] -= 10
+    step = 10
+    if key == b'w':  # move forward
+        rad = math.radians(-angle)
+        new_x = player_pos[0] - step * math.sin(rad)
+        new_y = player_pos[1] - step * math.cos(rad)
+        #if -600 < new_x < 600 and -600 < new_y < 600:
+        player_pos[0], player_pos[1] = new_x, new_y
 
-    if key == b's':
-        player_pos[1] += 10
+    if key == b's':  # move backward
+        rad = math.radians(-angle)
+        new_x = player_pos[0] + step * math.sin(rad)
+        new_y = player_pos[1] + step * math.cos(rad)
+        #if -600 < new_x < 600 and -600 < new_y < 600:
+        player_pos[0], player_pos[1] = new_x, new_y
+
 
 
 def specialKeyListener(key, x, y):
